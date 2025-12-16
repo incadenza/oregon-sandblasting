@@ -3,6 +3,7 @@ import './globals.css'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
+import localFont from 'next/font/local'
 import {draftMode} from 'next/headers'
 import {VisualEditing, toPlainText} from 'next-sanity'
 import {Toaster} from 'sonner'
@@ -57,13 +58,47 @@ const inter = Inter({
   display: 'swap',
 })
 
+const satoshi = localFont({
+  variable: '--font-satoshi',
+  display: 'swap',
+  src: [
+    {
+      path: '../public/fonts/Satoshi-Variable.woff2',
+      style: 'normal',
+      weight: '100 900',
+    },
+    {
+      path: '../public/fonts/Satoshi-VariableItalic.woff2',
+      style: 'italic',
+      weight: '100 900',
+    },
+  ],
+})
+
+const tungstenNarrow = localFont({
+  variable: '--font-tungsten-narrow',
+  display: 'swap',
+  src: [
+    {
+      path: '../public/fonts/TungstenNarrow-Medium.woff2',
+      // Treat as a range so Tailwind weights (e.g. font-semibold=600) still resolve to this face.
+      // This prevents falling back to the next font in the stack for the wordmark.
+      weight: '100 900',
+      style: 'normal',
+    },
+  ],
+})
+
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const {isEnabled: isDraftMode} = await draftMode()
 
   return (
-    <html lang="en" className={`${inter.variable} bg-white text-black`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${satoshi.variable} ${tungstenNarrow.variable} bg-white text-black`}
+    >
       <body>
-        <section className="min-h-screen pt-24">
+        <section className="min-h-screen pt-[115px]">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
           <Toaster />
           {isDraftMode && (

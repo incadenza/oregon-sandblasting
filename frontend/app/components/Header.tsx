@@ -2,52 +2,100 @@ import Link from 'next/link'
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 
+import HeaderLink from '@/app/components/HeaderLink'
+import HeaderNav from '@/app/components/HeaderNav'
+
 export default async function Header() {
   const {data: settings} = await sanityFetch({
     query: settingsQuery,
   })
 
   return (
-    <header className="fixed z-50 h-24 inset-0 bg-white/80 flex items-center backdrop-blur-lg">
-      <div className="container py-6 px-2 sm:px-6">
-        <div className="flex items-center justify-between gap-5">
-          <Link className="flex items-center gap-2" href="/">
-            <span className="text-lg sm:text-2xl pl-2 font-semibold">
-              {settings?.title || 'Sanity + Next.js'}
-            </span>
+    <header className="fixed inset-x-0 top-0 z-50 h-[115px] bg-design-charcoal">
+      <div className="container h-full px-4 sm:px-6">
+        {/* Figma: inner nav row is 45px tall and starts 32px from the top */}
+        <div className="flex h-full items-start justify-between gap-8 pt-8">
+          <Link href="/" className="flex items-center gap-3">
+            <span className="sr-only">{settings?.title || 'Oregon Sandblasting'}</span>
+            <div className="flex items-baseline gap-2">
+              <span className="font-brand font-semibold uppercase text-design-brightBlue text-[42px] leading-[0.9] sm:text-[45px]">
+                Oregon
+              </span>
+              <span className="font-brand font-semibold uppercase text-white text-[42px] leading-[0.9] sm:text-[45px]">
+                Sandblasting
+              </span>
+            </div>
           </Link>
 
-          <nav>
-            <ul
-              role="list"
-              className="flex items-center gap-4 md:gap-6 leading-5 text-xs sm:text-base tracking-tight font-mono"
-            >
-              <li>
-                <Link href="/about" className="hover:underline">
-                  About
-                </Link>
-              </li>
+          {/* Desktop nav */}
+          <HeaderNav />
 
-              <li className="sm:before:w-[1px] sm:before:bg-gray-200 before:block flex sm:gap-4 md:gap-6">
-                <Link
-                  className="rounded-full flex gap-4 items-center bg-black hover:bg-blue focus:bg-blue py-2 px-4 justify-center sm:py-3 sm:px-6 text-white transition-colors duration-200"
-                  href="https://github.com/sanity-io/sanity-template-nextjs-clean"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="whitespace-nowrap">View on GitHub</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="hidden sm:block h-4 sm:h-6"
-                  >
-                    <path d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"></path>
-                  </svg>
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          {/* Mobile nav (no JS) */}
+          <details className="group lg:hidden">
+            <summary className="list-none cursor-pointer select-none p-2 text-white/90 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-design-brightBlue">
+              <span className="sr-only">Open menu</span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+              >
+                <path
+                  d="M4 7H20M4 12H20M4 17H20"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </summary>
+            <div className="absolute left-0 right-0 top-[115px] bg-design-charcoal">
+              <div className="container px-4 sm:px-6 py-6">
+                <div className="flex flex-col gap-4">
+                  <HeaderLink href="/team" label="The Team" className="w-fit" />
+                  <HeaderLink href="/services" label="Services" className="w-fit" />
+                  <HeaderLink
+                    href="/what-makes-us-different"
+                    label="What Makes Us Different"
+                    className="w-fit"
+                  />
+                  <HeaderLink href="/posts" label="Projects" className="w-fit" />
+                  <HeaderLink href="/about" label="About Hybrid Coatings" className="w-fit" />
+                  <HeaderLink href="/schedule" label="Schedule Your Dropoff" className="w-fit" />
+                  <HeaderLink
+                    href="/contact"
+                    label="Talk to the Team"
+                    variant="cta"
+                    className="w-fit"
+                    endIcon={
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7 17L17 7"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                        <path
+                          d="M9 7H17V15"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
     </header>

@@ -7,6 +7,9 @@ export default {
     container: {
       center: true,
       padding: '2rem',
+      screens: {
+        '2xl': '1643px',
+      },
     },
     extend: {
       boxShadow: {
@@ -15,6 +18,16 @@ export default {
       colors: {
         black: '#0d0e12',
         white: '#fff',
+        design: {
+          oregonSandblastingBlue: '#202B43',
+          charcoal: '#29292D',
+          brightBlue: '#3297DB',
+          lightGray: '#ECF0F1',
+          orangeRed: '#E84C3D',
+          gray: '#565A5C',
+          royalBlue: '#3232DB',
+          lemon: '#E5E93D',
+        },
         cyan: {
           50: '#e7fefe',
           100: '#c5fcfc',
@@ -95,7 +108,28 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)'],
+        sans: [
+          'var(--font-satoshi)',
+          'var(--font-inter)',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
+        display: [
+          'var(--font-satoshi)',
+          'var(--font-inter)',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
+        brand: [
+          'var(--font-tungsten-narrow)',
+          'var(--font-satoshi)',
+          'var(--font-inter)',
+          'ui-sans-serif',
+          'system-ui',
+          'sans-serif',
+        ],
       },
     },
   },

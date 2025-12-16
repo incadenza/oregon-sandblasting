@@ -1,10 +1,25 @@
 @import 'tailwindcss';
+@import 'react-day-picker/dist/style.css';
 
 @plugin "@tailwindcss/typography";
 
 @utility container {
+  width: 100%;
+  max-width: 1643px;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+@utility font-brand {
+  font-family: var(--font-tungsten-narrow), var(--font-satoshi), var(--font-inter),
+    ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Keep the DayPicker visuals "default", but ensure interactive affordances */
+.rdp button,
+.rdp-button,
+.rdp-nav_button {
+  cursor: pointer;
 }
 
 @theme {
@@ -16,6 +31,14 @@
   --color-brand: #f50;
   --color-blue: #0052ff;
   --color-yellow: #cdea19;
+  --color-design-oregonSandblastingBlue: #202B43;
+  --color-design-charcoal: #29292D;
+  --color-design-brightBlue: #3297DB;
+  --color-design-lightGray: #ECF0F1;
+  --color-design-orangeRed: #E84C3D;
+  --color-design-gray: #565A5C;
+  --color-design-royalBlue: #3232DB;
+  --color-design-lemon: #E5E93D;
   --color-gray-50: #f6f6f8;
   --color-gray-100: #eeeef1;
   --color-gray-200: #e3e4e8;
@@ -28,8 +51,10 @@
   --color-gray-900: #1b1d27;
   --color-gray-950: #13141b;
 
-  --font-display: 'Inter', 'sans-serif';
-  --font-sans: 'Inter', 'sans-serif';
+  --font-display: var(--font-satoshi), var(--font-inter), ui-sans-serif, system-ui,
+    sans-serif;
+  --font-sans: var(--font-satoshi), var(--font-inter), ui-sans-serif, system-ui,
+    sans-serif;
 
   --default-transition-duration: 250ms;
 }
