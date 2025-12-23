@@ -5,6 +5,7 @@ type FieldProps = {
   required?: boolean
   className?: string
   inputClassName?: string
+  rows?: number
 }
 
 export function TextField({
@@ -30,6 +31,7 @@ export function TextAreaField({
   label,
   className = '',
   inputClassName = '',
+  rows = 4,
 }: FieldProps) {
   return (
     <div className={`space-y-3 ${className}`.trim()}>
@@ -37,7 +39,7 @@ export function TextAreaField({
         {label}
       </label>
       <textarea
-        rows={4}
+        rows={rows}
         className={`min-h-[122px] w-full resize-none bg-design-lightGray px-6 py-5 text-[18px] text-design-oregonSandblastingBlue outline-none ring-2 ring-transparent focus:ring-design-brightBlue ${inputClassName}`.trim()}
       />
     </div>
