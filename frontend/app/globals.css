@@ -3,11 +3,19 @@
 
 @plugin "@tailwindcss/typography";
 
+/* Prevent horizontal overflow */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 @utility container {
   width: 100%;
-  max-width: 1643px;
+  max-width: 1920px;
   margin: 0 auto;
-  padding: 0 2rem;
+  /* Figma: content at x=139 on 1920px = 7.24% margin, using ~7% padding */
+  padding-left: clamp(2rem, 7vw, 139px);
+  padding-right: clamp(2rem, 7vw, 139px);
 }
 
 @utility font-brand {

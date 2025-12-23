@@ -32,7 +32,7 @@ export default function ActionLink({
       className={`${base} ${variant === 'filled' ? filled : outline} ${className}`.trim()}
     >
       <span>{label}</span>
-      <ArrowDownLeftIcon className="h-5 w-5 -rotate-180" />
+      <ArrowDownLeftIcon className="h-[28px] w-[28px] -rotate-180" />
     </Link>
   )
 }

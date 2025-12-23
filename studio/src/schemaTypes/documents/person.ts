@@ -3,6 +3,7 @@ import {defineField, defineType} from 'sanity'
 
 /**
  * Person schema.  Define and edit the fields for the 'person' content type.
+ * Used for team members and post authors.
  * Learn more: https://www.sanity.io/docs/schema-types
  */
 
@@ -23,6 +24,26 @@ export const person = defineType({
       title: 'Last Name',
       type: 'string',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'role',
+      title: 'Role / Job Title',
+      type: 'string',
+      description: 'Their role or job title (e.g., "Founder", "Lead Coater")',
+    }),
+    defineField({
+      name: 'isTeamMember',
+      title: 'Show on Team Page',
+      type: 'boolean',
+      description: 'Enable to display this person on the Team page',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'displayOrder',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first on the Team page',
+      initialValue: 100,
     }),
     defineField({
       name: 'picture',
@@ -59,12 +80,13 @@ export const person = defineType({
     select: {
       firstName: 'firstName',
       lastName: 'lastName',
+      role: 'role',
       picture: 'picture',
     },
     prepare(selection) {
       return {
         title: `${selection.firstName} ${selection.lastName}`,
-        subtitle: 'Person',
+        subtitle: selection.role || 'Person',
         media: selection.picture,
       }
     },

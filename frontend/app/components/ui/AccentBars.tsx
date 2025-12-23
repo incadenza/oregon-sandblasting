@@ -5,8 +5,9 @@ type AccentBarsProps = {
 
 export default function AccentBars({align = 'right', className = ''}: AccentBarsProps) {
   return (
-    <div className={`mt-10 flex ${align === 'right' ? 'justify-end' : 'justify-start'} ${className}`}>
-      <div className="flex gap-0">
+    <div className={`flex ${align === 'right' ? 'justify-end' : 'justify-start'} ${className}`}>
+      {/* Figma: 4 bars, total width ~350px (87+88+88+87), height 15px */}
+      <div className="flex">
         <span className="h-[15px] w-[87px] bg-design-brightBlue" />
         <span className="h-[15px] w-[88px] bg-design-brightBlue" />
         <span className="h-[15px] w-[88px] bg-design-brightBlue" />

@@ -1,39 +1,61 @@
 import ActionLink from '@/app/components/ui/ActionLink'
 
-const heroBg = '/figma-assets/a558cff884c8667920b3389b86cc0a099e2f7b02.png'
+const heroBg = '/figma-assets/wmud-hero.png'
 
 export default function WhatMakesUsDifferentHero() {
   return (
-    <section className="relative overflow-hidden bg-design-oregonSandblastingBlue text-white">
-      <div className="absolute inset-0">
-        <img alt="" src={heroBg} className="h-full w-full object-cover object-center opacity-90" />
-        <div className="absolute inset-0 bg-gradient-to-b from-design-oregonSandblastingBlue/0 via-design-oregonSandblastingBlue/30 to-design-oregonSandblastingBlue/90 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-r from-design-oregonSandblastingBlue/70 via-transparent to-design-oregonSandblastingBlue/60 mix-blend-multiply" />
+    <section className="relative min-h-screen overflow-hidden bg-design-oregonSandblastingBlue text-white lg:h-[1050px] lg:min-h-0">
+      {/* Background image - scaled up and offset so woman appears further right */}
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          alt=""
+          src={heroBg}
+          className="absolute h-[120%] w-[130%] max-w-none object-cover object-center lg:-left-[15%] lg:-top-[10%]"
+        />
       </div>
 
-      <div className="container relative">
-        <div className="py-14 md:py-20">
-          <p className="text-[16px] font-medium tracking-[0.1em] text-white/90">
+      {/* Gradient overlays matching Figma */}
+      {/* Bottom gradient - h-[689px], top-[475px] */}
+      <div className="absolute bottom-0 left-0 h-[689px] w-full bg-gradient-to-t from-[#2c3f50] to-transparent mix-blend-multiply" />
+      {/* Top gradient - h-[407px] */}
+      <div className="absolute left-0 top-0 h-[407px] w-full bg-gradient-to-b from-[#2c3f50] to-transparent mix-blend-multiply" />
+      {/* Left gradient - w-[1513px] */}
+      <div className="absolute left-0 top-0 h-full w-[75%] bg-gradient-to-r from-[#2c3f50] to-transparent mix-blend-multiply" />
+      {/* Right gradient - w-[407px] */}
+      <div className="absolute right-0 top-0 h-full w-[407px] bg-gradient-to-l from-[#2c3f50] to-transparent mix-blend-multiply" />
+
+      {/* Content */}
+      <div className="container relative flex min-h-screen flex-col justify-center py-32 lg:min-h-0 lg:h-full lg:py-0">
+        <div className="lg:pt-[48px]">
+          {/* "WHAT MAKES US DIFFERENT" label - Figma: 16px, tracking 1.6px */}
+          <p className="font-sans text-[16px] font-medium uppercase tracking-[1.6px] text-white">
             WHAT MAKES US DIFFERENT
           </p>
-          <h1 className="mt-6 max-w-4xl text-[44px] font-bold leading-[1.05] text-white sm:text-[60px] md:text-[75px]">
+
+          {/* Main heading - Figma: 75px Satoshi Bold, leading 1.05, max-width 919px */}
+          <h1 className="mt-8 max-w-[919px] font-sans text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-[75px]">
             More than a Coater.
             <br />
             A Critical Project Partner.
           </h1>
 
-          <p className="mt-8 max-w-2xl text-[16px] leading-[1.55] text-white/85 md:text-[20px]">
-            The final stop for structural steel that will help you meet the schedule, not break the
-            schedule.
-            <br />
-            <br />
-            We built Oregon Sandblasting &amp; Coating to eliminate the coordination issues, delays,
-            and visual inconsistencies that slow down complex jobs. Whether you’re fabricating
-            infrastructure, industrial systems, or high-value architectural steel, we deliver more
-            than a finished part. We deliver reliability, speed, and control where it matters most.
-          </p>
+          {/* Body text - Figma: 20px Satoshi Medium, leading 1.4, max-width 680px */}
+          <div className="mt-10 max-w-[680px] font-sans text-base font-medium leading-[1.4] text-white md:text-lg lg:mt-12 lg:text-[20px]">
+            <p>
+              The final stop for structural steel that will help you meet the schedule, not break
+              the schedule.
+            </p>
+            <p className="mt-6">
+              We built Oregon Sandblasting &amp; Coating to eliminate the coordination issues,
+              delays, and visual inconsistencies that slow down complex jobs. Whether you're
+              fabricating infrastructure, industrial systems, or high-value architectural steel, we
+              deliver more than a finished part. We deliver reliability, speed, and control where it
+              matters most.
+            </p>
+          </div>
 
-          <div className="mt-8">
+          {/* CTA */}
+          <div className="mt-10 lg:mt-12">
             <ActionLink href="/contact" label="Request a Quote" variant="filled" />
           </div>
         </div>

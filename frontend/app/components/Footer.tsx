@@ -64,7 +64,7 @@ export default function Footer() {
 
         {/* Bottom row: badge + legal */}
         <div className="mt-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <img alt="" src={qp3Badge} className="h-[67px] w-[75px] object-cover" />
+          <img alt="AMPP QP3 Certified" src={qp3Badge} className="h-[67px] w-[75px] object-contain" />
 
           <div className="flex flex-col gap-4 text-[12px] leading-[0.9] text-white/80 lg:flex-row lg:items-center lg:gap-10">
             <span>©2025 Oregon Sandblasting. All rights reserved.</span>

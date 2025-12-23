@@ -23,7 +23,7 @@ export default async function Header() {
               </span>
               <span className="font-brand font-semibold uppercase text-white text-[42px] leading-[0.9] sm:text-[45px]">
                 Sandblasting
-              </span>
+            </span>
             </div>
           </Link>
 
@@ -74,7 +74,7 @@ export default async function Header() {
                         height="18"
                         viewBox="0 0 24 24"
                         fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+                    xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M7 17L17 7"
@@ -89,7 +89,7 @@ export default async function Header() {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                         />
-                      </svg>
+                  </svg>
                     }
                   />
                 </div>

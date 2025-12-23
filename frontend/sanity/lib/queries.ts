@@ -95,3 +95,14 @@ export const pagesSlugs = defineQuery(`
   *[_type == "page" && defined(slug.current)]
   {"slug": slug.current}
 `)
+
+// Team members query - fetches all persons marked as team members, sorted by displayOrder
+export const teamMembersQuery = defineQuery(`
+  *[_type == "person" && isTeamMember == true] | order(displayOrder asc, firstName asc) {
+    _id,
+    firstName,
+    lastName,
+    role,
+    picture
+  }
+`)

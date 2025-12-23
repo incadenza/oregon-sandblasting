@@ -1,4 +1,3 @@
-import ArrowDownLeftIcon from '@/app/components/ui/ArrowDownLeftIcon'
 import Link from 'next/link'
 
 type QuickLink = {
@@ -15,22 +14,36 @@ const links: QuickLink[] = [
 ]
 
 function QuickLinkCard({href, label, tone = 'secondary'}: QuickLink) {
-  const bg = tone === 'primary' ? 'bg-design-brightBlue' : 'bg-design-oregonSandblastingBlue'
+  const bg = tone === 'primary' ? 'bg-design-brightBlue' : 'bg-design-royalBlue'
   return (
     <Link
       href={href}
-      className={`${bg} group relative flex h-40 items-center justify-center overflow-hidden px-10 text-white transition-colors hover:bg-design-brightBlue`}
+      className={`${bg} group relative flex h-[160px] items-center justify-center overflow-hidden px-10 text-white transition-colors hover:bg-design-brightBlue`}
     >
-      <span className="text-[28px] sm:text-[32px] font-bold leading-[0.9]">{label}</span>
-      <ArrowDownLeftIcon className="absolute right-8 top-1/2 h-9 w-9 -translate-y-1/2 -rotate-180 opacity-90 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-[52%]" />
+      {/* Text - 32px, bold, leading 0.9 */}
+      <span className="text-[32px] font-bold leading-[0.9]">{label}</span>
+
+      {/* Arrow icon - 38px, rotated 180deg */}
+      <div className="absolute right-[116px] top-[66px] flex h-[38px] w-[38px] rotate-180 items-center justify-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+        <svg className="h-full w-full text-white" viewBox="0 0 28 28" fill="none">
+          <path
+            d="M8 20L20 8M20 8V18M20 8H10"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
     </Link>
   )
 }
 
 export default function QuickLinksRow() {
   return (
-    <section className="py-6">
+    <section className="pb-[68px]">
       <div className="container">
+        {/* Grid: 4 columns, each 410px wide, 160px tall */}
         <div className="grid grid-cols-1 overflow-hidden sm:grid-cols-2 lg:grid-cols-4">
           {links.map((l) => (
             <QuickLinkCard key={l.href} {...l} />

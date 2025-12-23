@@ -774,6 +774,9 @@ export type PostPagesSlugsResult = Array<{
 export type PagesSlugsResult = Array<{
   slug: string
 }>
+// Variable: teamMembersQuery
+// Query: *[_type == "person" && isTeamMember == true] | order(displayOrder asc, firstName asc) {    _id,    firstName,    lastName,    role,    picture {      asset->{        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt,      hotspot,      crop    }  }
+export type TeamMembersQueryResult = Array<never>
 
 // Query TypeMap
 import '@sanity/client'
@@ -787,5 +790,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
+    '\n  *[_type == "person" && isTeamMember == true] | order(displayOrder asc, firstName asc) {\n    _id,\n    firstName,\n    lastName,\n    role,\n    picture {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      hotspot,\n      crop\n    }\n  }\n': TeamMembersQueryResult
   }
 }
