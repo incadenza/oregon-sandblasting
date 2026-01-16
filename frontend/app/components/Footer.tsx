@@ -49,11 +49,11 @@ export default function Footer() {
           </Link>
 
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-end lg:gap-10">
-            <nav className="flex flex-wrap items-center gap-x-10 gap-y-4">
+            <nav className="grid grid-cols-2 gap-x-6 gap-y-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4 lg:gap-x-10">
               <HeaderLink href="/team" label="The Team" />
               <HeaderLink href="/services" label="Services" />
               <HeaderLink href="/what-makes-us-different" label="What Makes Us Different" />
-              <HeaderLink href="/posts" label="Projects" />
+              {/* <HeaderLink href="/posts" label="Projects" /> */}
               <HeaderLink href="/about" label="About Hybrid Coatings" />
               <HeaderLink href="/schedule" label="Schedule Your Dropoff" />
             </nav>

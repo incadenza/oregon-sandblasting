@@ -1,6 +1,6 @@
 export default function ContactInfoSection() {
   return (
-    <section className="bg-white pb-[100px]">
+    <section className="bg-white pb-12 md:pb-16 lg:pb-[100px]">
       <div className="container">
         {/* Figma: 1643px total width, image 750px on left, text on right starting at 822px */}
         <div className="flex flex-col gap-10 lg:h-[403px] lg:flex-row lg:items-stretch lg:gap-[72px]">

@@ -4,43 +4,40 @@ const rightImage = '/figma-assets/7d10106fc4277aec6c786dffe49487add3531d80.png'
 
 export default function DifferentiatorSection() {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white py-16 md:py-24 lg:py-32">
       <div className="container">
-        <div className="grid items-center gap-12 lg:grid-cols-12">
-          {/* Left content - positioned at 138px from container left in Figma */}
+        <div className="grid items-start gap-10 md:gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Left content */}
           <div className="lg:col-span-5">
-            {/* Heading - 50px text, max-width 611px, line-height 1.2 */}
-            <h2 className="max-w-[611px] text-[50px] leading-[1.2] text-design-oregonSandblastingBlue">
+            {/* Heading - Figma: 50px, leading 1.2 */}
+            {/* "Anyone can apply a coating." is regular weight, rest is bold */}
+            <h2 className="max-w-[611px] font-sans text-[28px] font-normal leading-[1.2] text-design-oregonSandblastingBlue sm:text-[36px] md:text-[42px] lg:text-[50px]">
               Anyone can apply a coating.
-              <span className="font-bold">
-                {' '}
+              <strong className="font-bold">
                 We engineer the finish, compress the schedule, and simplify the entire job.
-              </span>
+              </strong>
             </h2>
 
-            {/* Body text - 20px, positioned at top 2100px in full layout */}
-            <p className="mt-[30px] text-[20px] leading-[1.4] text-[#2a2d34]">
+            {/* Body text - Figma: 20px, leading 1.4 */}
+            <p className="mt-6 font-sans text-[16px] font-medium leading-[1.4] text-design-oregonSandblastingBlue md:mt-8 md:text-[18px] lg:mt-[30px] lg:text-[20px]">
               Discover what makes us different.
             </p>
 
-            {/* CTA - positioned at top 2157px */}
-            <div className="mt-[57px]">
+            {/* CTA - Figma: ~57px gap from body text */}
+            <div className="mt-8 md:mt-12 lg:mt-[57px]">
               <ActionLink href="/what-makes-us-different" label="Learn More" variant="filled" />
             </div>
           </div>
 
-          {/* Right image - positioned at left 881px, width 900px, height 860px */}
+          {/* Right image - responsive height */}
           <div className="lg:col-span-7">
             <div className="relative mx-auto max-w-[900px]">
-              <div className="relative h-[860px] w-full overflow-hidden bg-[#93b8c1]">
-                {/* Image with exact Figma positioning: rotated 180deg, scale-y-[-100%] */}
-                <div className="absolute -left-[21px] -top-[205px] flex h-[1852px] w-[1236px] rotate-180 scale-y-[-100%] items-center justify-center">
-                  <img
-                    alt=""
-                    src={rightImage}
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
+              <div className="relative h-[350px] w-full overflow-hidden sm:h-[450px] md:h-[600px] lg:h-[860px]">
+                <img
+                  alt="Blue steel structure"
+                  src={rightImage}
+                  className="h-full w-full object-cover object-center"
+                />
               </div>
             </div>
           </div>

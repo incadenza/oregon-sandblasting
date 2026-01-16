@@ -39,14 +39,14 @@ export default function TrustedByStrip() {
           Trusted By Leaders Big and Small
         </h2>
 
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 lg:gap-x-14">
+        <div className="mt-7 grid grid-cols-2 items-center justify-items-center gap-6 sm:grid-cols-3 md:grid-cols-6">
           {logos.map((logo) => (
             <img
               key={logo.src}
               src={logo.src}
               alt={logo.alt}
-              style={{ height: `${logo.height}px`, width: 'auto' }}
-              className="opacity-90"
+              className="h-[40px] w-auto opacity-90 sm:h-[50px] md:h-[60px] lg:h-auto"
+              style={{ maxHeight: `${logo.height}px` }}
             />
           ))}
         </div>

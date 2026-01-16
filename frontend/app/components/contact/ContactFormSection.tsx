@@ -8,7 +8,7 @@ import {
 
 export default function ContactFormSection() {
   return (
-    <section id="form" className="bg-white pt-[120px] pb-[100px]">
+    <section id="form" className="bg-white py-12 md:py-16 lg:pt-[120px] lg:pb-[100px]">
       <div className="container">
         {/* Header row - Figma: "Let's Talk." on left, "*Required Fields" on right */}
         <div className="flex items-start justify-between gap-10">
@@ -21,8 +21,8 @@ export default function ContactFormSection() {
         </div>
 
         {/* Form - Figma: 2 columns, 729px each, gap ~183px */}
-        <form className="mt-[70px]">
-          <div className="grid gap-x-[183px] gap-y-[55px] lg:grid-cols-2">
+        <form className="mt-10 md:mt-[70px]">
+          <div className="grid gap-x-8 gap-y-8 md:gap-x-12 md:gap-y-[55px] lg:grid-cols-2 lg:gap-x-[100px] xl:gap-x-[183px]">
             {/* Row 1 */}
             <TextField label="Name" required />
             <TextField label="Company" />

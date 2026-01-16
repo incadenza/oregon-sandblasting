@@ -2,8 +2,8 @@ import Link from 'next/link'
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
 
-import HeaderLink from '@/app/components/HeaderLink'
 import HeaderNav from '@/app/components/HeaderNav'
+import HeaderLink from '@/app/components/HeaderLink'
 
 export default async function Header() {
   const {data: settings} = await sanityFetch({
@@ -23,24 +23,24 @@ export default async function Header() {
               </span>
               <span className="font-brand font-semibold uppercase text-white text-[42px] leading-[0.9] sm:text-[45px]">
                 Sandblasting
-            </span>
+              </span>
             </div>
           </Link>
 
           {/* Desktop nav */}
           <HeaderNav />
 
-          {/* Mobile nav (no JS) */}
+          {/* Mobile nav - CSS-only using details/summary */}
           <details className="group lg:hidden">
-            <summary className="list-none cursor-pointer select-none p-2 text-white/90 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-design-brightBlue">
-              <span className="sr-only">Open menu</span>
+            <summary className="cursor-pointer list-none p-2 text-white/90 hover:text-white [&::-webkit-details-marker]:hidden">
+              {/* Hamburger icon - shown when closed */}
               <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="h-6 w-6 group-open:hidden"
               >
                 <path
                   d="M4 7H20M4 12H20M4 17H20"
@@ -49,9 +49,26 @@ export default async function Header() {
                   strokeLinecap="round"
                 />
               </svg>
+              {/* Close icon - shown when open */}
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="hidden h-6 w-6 group-open:block"
+              >
+                <path
+                  d="M6 6L18 18M6 18L18 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
             </summary>
+
             <div className="absolute left-0 right-0 top-[115px] bg-design-charcoal">
-              <div className="container px-4 sm:px-6 py-6">
+              <div className="container px-4 py-6 sm:px-6">
                 <div className="flex flex-col gap-4">
                   <HeaderLink href="/team" label="The Team" className="w-fit" />
                   <HeaderLink href="/services" label="Services" className="w-fit" />
@@ -60,7 +77,6 @@ export default async function Header() {
                     label="What Makes Us Different"
                     className="w-fit"
                   />
-                  <HeaderLink href="/posts" label="Projects" className="w-fit" />
                   <HeaderLink href="/about" label="About Hybrid Coatings" className="w-fit" />
                   <HeaderLink href="/schedule" label="Schedule Your Dropoff" className="w-fit" />
                   <HeaderLink
@@ -74,7 +90,7 @@ export default async function Header() {
                         height="18"
                         viewBox="0 0 24 24"
                         fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
                           d="M7 17L17 7"
@@ -89,7 +105,7 @@ export default async function Header() {
                           strokeLinecap="round"
                           strokeLinejoin="round"
                         />
-                  </svg>
+                      </svg>
                     }
                   />
                 </div>

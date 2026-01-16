@@ -1,34 +1,21 @@
-'use client'
-
-import {usePathname} from 'next/navigation'
-
 import HeaderLink from '@/app/components/HeaderLink'
 
 export default function HeaderNav() {
-  const pathname = usePathname() || '/'
-
-  const isActive = (href: string) => {
-    if (href === '/') return pathname === '/'
-    return pathname === href || pathname.startsWith(`${href}/`)
-  }
-
   return (
     <nav className="hidden lg:flex items-center gap-10">
-      <HeaderLink href="/team" label="The Team" isActive={isActive('/team')} />
-      <HeaderLink href="/services" label="Services" isActive={isActive('/services')} />
+      <HeaderLink href="/team" label="The Team" />
+      <HeaderLink href="/services" label="Services" />
       <HeaderLink
         href="/what-makes-us-different"
         label="What Makes Us Different"
-        isActive={isActive('/what-makes-us-different')}
       />
-      <HeaderLink href="/posts" label="Projects" isActive={isActive('/posts')} />
-      <HeaderLink href="/about" label="About Hybrid Coatings" isActive={isActive('/about')} />
-      <HeaderLink href="/schedule" label="Schedule Your Dropoff" isActive={isActive('/schedule')} />
+      {/* <HeaderLink href="/posts" label="Projects" /> */}
+      <HeaderLink href="/about" label="About Hybrid Coatings" />
+      <HeaderLink href="/schedule" label="Schedule Your Dropoff" />
       <HeaderLink
         href="/contact"
         label="Talk to the Team"
         variant="cta"
-        isActive={isActive('/contact')}
         className="ml-2"
         endIcon={
           <svg
