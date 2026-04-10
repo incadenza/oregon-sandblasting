@@ -1,20 +1,22 @@
 import HeaderLink from '@/app/components/HeaderLink'
 
-export default function HeaderNav() {
+type NavLink = {label: string; href: string}
+
+type Props = {
+  navLinks: NavLink[]
+  ctaLabel: string
+  ctaHref: string
+}
+
+export default function HeaderNav({navLinks, ctaLabel, ctaHref}: Props) {
   return (
     <nav className="hidden lg:flex items-center gap-10">
-      <HeaderLink href="/team" label="The Team" />
-      <HeaderLink href="/services" label="Services" />
+      {navLinks.map((link) => (
+        <HeaderLink key={link.href} href={link.href} label={link.label} />
+      ))}
       <HeaderLink
-        href="/what-makes-us-different"
-        label="What Makes Us Different"
-      />
-      {/* <HeaderLink href="/posts" label="Projects" /> */}
-      <HeaderLink href="/about" label="About Hybrid Coatings" />
-      <HeaderLink href="/schedule" label="Schedule Your Dropoff" />
-      <HeaderLink
-        href="/contact"
-        label="Talk to the Team"
+        href={ctaHref}
+        label={ctaLabel}
         variant="cta"
         className="ml-2"
         endIcon={
@@ -25,24 +27,11 @@ export default function HeaderNav() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M7 17L17 7"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M9 7H17V15"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M7 17L17 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d="M9 7H17V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         }
       />
     </nav>
   )
 }
-
-

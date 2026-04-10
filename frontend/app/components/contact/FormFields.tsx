@@ -2,25 +2,33 @@ import ArrowDownLeftIcon from '@/app/components/ui/ArrowDownLeftIcon'
 
 type FieldProps = {
   label: string
+  name: string
   required?: boolean
   className?: string
   inputClassName?: string
   rows?: number
+  type?: string
 }
 
 export function TextField({
   label,
+  name,
   required,
   className = '',
   inputClassName = '',
+  type = 'text',
 }: FieldProps) {
   return (
     <div className={`space-y-3 ${className}`.trim()}>
-      <label className="block text-[20px] font-bold leading-[1.4] text-design-oregonSandblastingBlue md:text-[24px]">
+      <label htmlFor={name} className="block text-[20px] font-bold leading-[1.4] text-design-oregonSandblastingBlue md:text-[24px]">
         {label}
         {required ? '*' : ''}
       </label>
       <input
+        id={name}
+        name={name}
+        type={type}
+        required={required}
         className={`h-[70px] w-full bg-design-lightGray px-6 text-[18px] text-design-oregonSandblastingBlue outline-none ring-2 ring-transparent focus:ring-design-brightBlue ${inputClassName}`.trim()}
       />
     </div>
@@ -29,16 +37,19 @@ export function TextField({
 
 export function TextAreaField({
   label,
+  name,
   className = '',
   inputClassName = '',
   rows = 4,
 }: FieldProps) {
   return (
     <div className={`space-y-3 ${className}`.trim()}>
-      <label className="block text-[20px] font-bold leading-[1.4] text-design-oregonSandblastingBlue md:text-[24px]">
+      <label htmlFor={name} className="block text-[20px] font-bold leading-[1.4] text-design-oregonSandblastingBlue md:text-[24px]">
         {label}
       </label>
       <textarea
+        id={name}
+        name={name}
         rows={rows}
         className={`min-h-[122px] w-full resize-none bg-design-lightGray px-6 py-5 text-[18px] text-design-oregonSandblastingBlue outline-none ring-2 ring-transparent focus:ring-design-brightBlue ${inputClassName}`.trim()}
       />
@@ -48,6 +59,7 @@ export function TextAreaField({
 
 export function SelectField({
   label,
+  name,
   required,
   className = '',
   inputClassName = '',
@@ -55,12 +67,14 @@ export function SelectField({
 }: FieldProps & {options: string[]}) {
   return (
     <div className={`space-y-3 ${className}`.trim()}>
-      <label className="block text-[20px] font-bold leading-[1.4] text-design-oregonSandblastingBlue md:text-[24px]">
+      <label htmlFor={name} className="block text-[20px] font-bold leading-[1.4] text-design-oregonSandblastingBlue md:text-[24px]">
         {label}
         {required ? '*' : ''}
       </label>
       <div className="relative">
         <select
+          id={name}
+          name={name}
           className={`h-[70px] w-full appearance-none bg-design-lightGray px-6 pr-14 text-[18px] text-design-oregonSandblastingBlue outline-none ring-2 ring-transparent focus:ring-design-brightBlue ${inputClassName}`.trim()}
           defaultValue={options[0]}
         >
@@ -88,10 +102,12 @@ export function SelectField({
 
 export function CheckboxGrid({
   label,
+  name,
   options,
   className = '',
 }: {
   label: string
+  name: string
   options: string[]
   className?: string
 }) {
@@ -105,6 +121,8 @@ export function CheckboxGrid({
           <label key={o} className="flex items-center gap-4 text-design-oregonSandblastingBlue">
             <input
               type="checkbox"
+              name={name}
+              value={o}
               className="h-10 w-10 appearance-none bg-design-lightGray ring-2 ring-transparent checked:bg-design-brightBlue focus:ring-design-brightBlue"
             />
             <span className="text-[18px] font-medium leading-[1.4] md:text-[24px]">{o}</span>
@@ -118,14 +136,17 @@ export function CheckboxGrid({
 export function PrimaryButton({
   label,
   className = '',
+  disabled = false,
 }: {
   label: string
   className?: string
+  disabled?: boolean
 }) {
   return (
     <button
       type="submit"
-      className={`inline-flex h-[60px] items-center gap-3 bg-design-brightBlue px-8 text-[16px] font-bold uppercase tracking-[0.06em] text-white hover:bg-design-brightBlue/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-design-brightBlue focus-visible:ring-offset-2 ${className}`.trim()}
+      disabled={disabled}
+      className={`inline-flex h-[60px] items-center gap-3 bg-design-brightBlue px-8 text-[16px] font-bold uppercase tracking-[0.06em] text-white hover:bg-design-brightBlue/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-design-brightBlue focus-visible:ring-offset-2 ${disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'} ${className}`.trim()}
     >
       {label}
       <ArrowDownLeftIcon className="h-5 w-5 -rotate-180" />

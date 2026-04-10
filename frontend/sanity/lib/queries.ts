@@ -96,7 +96,6 @@ export const pagesSlugs = defineQuery(`
   {"slug": slug.current}
 `)
 
-// Team members query - fetches all persons marked as team members, sorted by displayOrder
 export const teamMembersQuery = defineQuery(`
   *[_type == "person" && isTeamMember == true] | order(displayOrder asc, firstName asc) {
     _id,
@@ -104,5 +103,141 @@ export const teamMembersQuery = defineQuery(`
     lastName,
     role,
     picture
+  }
+`)
+
+// ─── Page singleton queries ───
+
+export const homePageQuery = defineQuery(`
+  *[_type == "homePage"][0]{
+    heroHeading,
+    heroBody,
+    heroPrimaryCtaLabel,
+    heroPrimaryCtaLink { ..., ${linkReference} },
+    heroSecondaryCtaLabel,
+    heroSecondaryCtaLink { ..., ${linkReference} },
+    heroBackgroundImage,
+    trustedByHeading,
+    trustedByLogos[]{ logo },
+    differentiatorHeadingRegular,
+    differentiatorHeadingBold,
+    differentiatorBody,
+    differentiatorCtaLabel,
+    differentiatorCtaLink { ..., ${linkReference} },
+    differentiatorImage,
+    blastToFinishHeading,
+    blastToFinishBody,
+    blastToFinishCtaLabel,
+    blastToFinishCtaLink { ..., ${linkReference} },
+    blastToFinishBackgroundImage,
+    quickLinks[]{ label, href, tone }
+  }
+`)
+
+export const aboutPageQuery = defineQuery(`
+  *[_type == "aboutPage"][0]{
+    hero {
+      label, heading, body, ctaLabel,
+      ctaLink { ..., ${linkReference} },
+      backgroundImage
+    },
+    hybridCoatingHeading,
+    hybridCoatingBody,
+    contentRows[]{ title, description, image, imageSide, learnMoreLabel, learnMoreLink { ..., ${linkReference} } },
+    bottomCta {
+      heading, body, buttonLabel,
+      buttonLink { ..., ${linkReference} }
+    }
+  }
+`)
+
+export const servicesPageQuery = defineQuery(`
+  *[_type == "servicesPage"][0]{
+    hero {
+      label, heading, body, ctaLabel,
+      ctaLink { ..., ${linkReference} },
+      backgroundImage
+    },
+    sectionTitle,
+    services[]{ title, description, image, imageSide, learnMoreLabel, learnMoreLink { ..., ${linkReference} } },
+    bottomCta {
+      heading, body, buttonLabel,
+      buttonLink { ..., ${linkReference} }
+    }
+  }
+`)
+
+export const contactPageQuery = defineQuery(`
+  *[_type == "contactPage"][0]{
+    hero {
+      label, heading, body,
+      backgroundImage
+    },
+    formHeading,
+    formRecipientEmails,
+    contactHeading,
+    address,
+    phone,
+    email,
+    contactImage
+  }
+`)
+
+export const teamPageQuery = defineQuery(`
+  *[_type == "teamPage"][0]{
+    hero {
+      label, heading, body,
+      backgroundImage
+    },
+    bottomCta {
+      heading, body, buttonLabel,
+      buttonLink { ..., ${linkReference} }
+    }
+  }
+`)
+
+export const whatMakesUsDifferentPageQuery = defineQuery(`
+  *[_type == "whatMakesUsDifferentPage"][0]{
+    hero {
+      label, heading, body, ctaLabel,
+      ctaLink { ..., ${linkReference} },
+      backgroundImage
+    },
+    featuresSectionHeading,
+    features[]{ title, kicker, body, icon, showAccentBars },
+    bottomCta {
+      heading, body, buttonLabel,
+      buttonLink { ..., ${linkReference} }
+    }
+  }
+`)
+
+export const navigationQuery = defineQuery(`
+  *[_type == "navigation"][0]{
+    navLinks[]{ label, href },
+    ctaLabel,
+    ctaHref
+  }
+`)
+
+export const footerContentQuery = defineQuery(`
+  *[_type == "footerContent"][0]{
+    address,
+    phone,
+    badgeImage,
+    copyrightText,
+    legalLinks[]{ label, href }
+  }
+`)
+
+export const schedulePageQuery = defineQuery(`
+  *[_type == "schedulePage"][0]{
+    heading,
+    description,
+    confirmationHeading,
+    confirmationBody,
+    notificationEmail,
+    businessAddress,
+    businessPhone
   }
 `)

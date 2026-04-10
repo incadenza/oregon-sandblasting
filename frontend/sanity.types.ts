@@ -32,6 +32,95 @@ export type Link = {
   openInNewTab?: boolean
 }
 
+export type TrustedByLogo = {
+  _type: 'trustedByLogo'
+  logo: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type ServiceItem = {
+  _type: 'serviceItem'
+  title: string
+  description?: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  imageSide?: 'left' | 'right'
+  learnMoreLabel?: string
+  learnMoreLink?: Link
+}
+
+export type HeroSection = {
+  _type: 'heroSection'
+  label?: string
+  heading: string
+  body?: string
+  ctaLabel?: string
+  ctaLink?: Link
+  backgroundImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type FeatureItem = {
+  _type: 'featureItem'
+  title: string
+  kicker?: string
+  body?: string
+  icon?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  showAccentBars?: boolean
+}
+
+export type CtaSection = {
+  _type: 'ctaSection'
+  heading: string
+  body?: string
+  buttonLabel?: string
+  buttonLink?: Link
+}
+
 export type CallToAction = {
   _type: 'callToAction'
   heading: string
@@ -79,6 +168,242 @@ export type BlockContent = Array<{
   _type: 'block'
   _key: string
 }>
+
+export type SchedulePage = {
+  _id: string
+  _type: 'schedulePage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heading?: string
+  description?: string
+  confirmationHeading?: string
+  confirmationBody?: string
+  notificationEmail: string
+  businessAddress?: string
+  businessPhone?: string
+}
+
+export type FooterContent = {
+  _id: string
+  _type: 'footerContent'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  address?: string
+  phone?: string
+  badgeImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  copyrightText?: string
+  legalLinks?: Array<{
+    label: string
+    href: string
+    _key: string
+  }>
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x: number
+  y: number
+  height: number
+  width: number
+}
+
+export type Navigation = {
+  _id: string
+  _type: 'navigation'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  navLinks?: Array<{
+    label: string
+    href: string
+    _key: string
+  }>
+  ctaLabel?: string
+  ctaHref?: string
+}
+
+export type WhatMakesUsDifferentPage = {
+  _id: string
+  _type: 'whatMakesUsDifferentPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  hero?: HeroSection
+  featuresSectionHeading?: string
+  features?: Array<
+    {
+      _key: string
+    } & FeatureItem
+  >
+  bottomCta?: CtaSection
+}
+
+export type TeamPage = {
+  _id: string
+  _type: 'teamPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  hero?: HeroSection
+  bottomCta?: CtaSection
+}
+
+export type ContactPage = {
+  _id: string
+  _type: 'contactPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  hero?: HeroSection
+  formHeading?: string
+  formRecipientEmails: Array<string>
+  contactHeading?: string
+  address?: string
+  phone?: string
+  email?: string
+  contactImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type ServicesPage = {
+  _id: string
+  _type: 'servicesPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  hero?: HeroSection
+  sectionTitle?: string
+  services?: Array<
+    {
+      _key: string
+    } & ServiceItem
+  >
+  bottomCta?: CtaSection
+}
+
+export type AboutPage = {
+  _id: string
+  _type: 'aboutPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  hero?: HeroSection
+  hybridCoatingHeading?: string
+  hybridCoatingBody?: string
+  contentRows?: Array<
+    {
+      _key: string
+    } & ServiceItem
+  >
+  bottomCta?: CtaSection
+}
+
+export type HomePage = {
+  _id: string
+  _type: 'homePage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  heroHeading: string
+  heroBody?: string
+  heroPrimaryCtaLabel?: string
+  heroPrimaryCtaLink?: Link
+  heroSecondaryCtaLabel?: string
+  heroSecondaryCtaLink?: Link
+  heroBackgroundImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  trustedByHeading?: string
+  trustedByLogos?: Array<
+    {
+      _key: string
+    } & TrustedByLogo
+  >
+  differentiatorHeadingRegular?: string
+  differentiatorHeadingBold?: string
+  differentiatorBody?: string
+  differentiatorCtaLabel?: string
+  differentiatorCtaLink?: Link
+  differentiatorImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  blastToFinishHeading?: string
+  blastToFinishBody?: string
+  blastToFinishCtaLabel?: string
+  blastToFinishCtaLink?: Link
+  blastToFinishBackgroundImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  quickLinks?: Array<{
+    label: string
+    href: string
+    tone?: 'primary' | 'secondary'
+    _key: string
+  }>
+}
 
 export type Settings = {
   _id: string
@@ -133,22 +458,6 @@ export type Settings = {
     metadataBase?: string
     _type: 'image'
   }
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x: number
-  y: number
-  height: number
-  width: number
 }
 
 export type Page = {
@@ -211,6 +520,9 @@ export type Person = {
   _rev: string
   firstName: string
   lastName: string
+  role?: string
+  isTeamMember?: boolean
+  displayOrder?: number
   picture: {
     asset?: {
       _ref: string
@@ -465,12 +777,26 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | Link
+  | TrustedByLogo
+  | ServiceItem
+  | HeroSection
+  | FeatureItem
+  | CtaSection
   | CallToAction
   | InfoSection
   | BlockContent
-  | Settings
+  | SchedulePage
+  | FooterContent
   | SanityImageCrop
   | SanityImageHotspot
+  | Navigation
+  | WhatMakesUsDifferentPage
+  | TeamPage
+  | ContactPage
+  | ServicesPage
+  | AboutPage
+  | HomePage
+  | Settings
   | Page
   | Post
   | Person
@@ -776,7 +1102,461 @@ export type PagesSlugsResult = Array<{
 }>
 // Variable: teamMembersQuery
 // Query: *[_type == "person" && isTeamMember == true] | order(displayOrder asc, firstName asc) {    _id,    firstName,    lastName,    role,    picture  }
-export type TeamMembersQueryResult = Array<never>
+export type TeamMembersQueryResult = Array<{
+  _id: string
+  firstName: string
+  lastName: string
+  role: string | null
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}>
+// Variable: homePageQuery
+// Query: *[_type == "homePage"][0]{    heroHeading,    heroBody,    heroPrimaryCtaLabel,    heroPrimaryCtaLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } },    heroSecondaryCtaLabel,    heroSecondaryCtaLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } },    heroBackgroundImage,    trustedByHeading,    trustedByLogos[]{ logo },    differentiatorHeadingRegular,    differentiatorHeadingBold,    differentiatorBody,    differentiatorCtaLabel,    differentiatorCtaLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } },    differentiatorImage,    blastToFinishHeading,    blastToFinishBody,    blastToFinishCtaLabel,    blastToFinishCtaLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } },    blastToFinishBackgroundImage,    quickLinks[]{ label, href, tone }  }
+export type HomePageQueryResult = {
+  heroHeading: string
+  heroBody: string | null
+  heroPrimaryCtaLabel: string | null
+  heroPrimaryCtaLink: {
+    _type: 'link'
+    linkType?: 'href' | 'page' | 'post'
+    href?: string
+    page: string | null
+    post: string | null
+    openInNewTab?: boolean
+  } | null
+  heroSecondaryCtaLabel: string | null
+  heroSecondaryCtaLink: {
+    _type: 'link'
+    linkType?: 'href' | 'page' | 'post'
+    href?: string
+    page: string | null
+    post: string | null
+    openInNewTab?: boolean
+  } | null
+  heroBackgroundImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  trustedByHeading: string | null
+  trustedByLogos: Array<{
+    logo: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
+  differentiatorHeadingRegular: string | null
+  differentiatorHeadingBold: string | null
+  differentiatorBody: string | null
+  differentiatorCtaLabel: string | null
+  differentiatorCtaLink: {
+    _type: 'link'
+    linkType?: 'href' | 'page' | 'post'
+    href?: string
+    page: string | null
+    post: string | null
+    openInNewTab?: boolean
+  } | null
+  differentiatorImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  blastToFinishHeading: string | null
+  blastToFinishBody: string | null
+  blastToFinishCtaLabel: string | null
+  blastToFinishCtaLink: {
+    _type: 'link'
+    linkType?: 'href' | 'page' | 'post'
+    href?: string
+    page: string | null
+    post: string | null
+    openInNewTab?: boolean
+  } | null
+  blastToFinishBackgroundImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  quickLinks: Array<{
+    label: string
+    href: string
+    tone: 'primary' | 'secondary' | null
+  }> | null
+} | null
+// Variable: aboutPageQuery
+// Query: *[_type == "aboutPage"][0]{    hero {      label, heading, body, ctaLabel,      ctaLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } },      backgroundImage    },    hybridCoatingHeading,    hybridCoatingBody,    contentRows[]{ title, description, image, imageSide, learnMoreLabel, learnMoreLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } } },    bottomCta {      heading, body, buttonLabel,      buttonLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } }    }  }
+export type AboutPageQueryResult = {
+  hero: {
+    label: string | null
+    heading: string
+    body: string | null
+    ctaLabel: string | null
+    ctaLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+    backgroundImage: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+  hybridCoatingHeading: string | null
+  hybridCoatingBody: string | null
+  contentRows: Array<{
+    title: string
+    description: string | null
+    image: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+    imageSide: 'left' | 'right' | null
+    learnMoreLabel: string | null
+    learnMoreLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+  }> | null
+  bottomCta: {
+    heading: string
+    body: string | null
+    buttonLabel: string | null
+    buttonLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+  } | null
+} | null
+// Variable: servicesPageQuery
+// Query: *[_type == "servicesPage"][0]{    hero {      label, heading, body, ctaLabel,      ctaLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } },      backgroundImage    },    sectionTitle,    services[]{ title, description, image, imageSide, learnMoreLabel, learnMoreLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } } },    bottomCta {      heading, body, buttonLabel,      buttonLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } }    }  }
+export type ServicesPageQueryResult = {
+  hero: {
+    label: string | null
+    heading: string
+    body: string | null
+    ctaLabel: string | null
+    ctaLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+    backgroundImage: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+  sectionTitle: string | null
+  services: Array<{
+    title: string
+    description: string | null
+    image: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+    imageSide: 'left' | 'right' | null
+    learnMoreLabel: string | null
+    learnMoreLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+  }> | null
+  bottomCta: {
+    heading: string
+    body: string | null
+    buttonLabel: string | null
+    buttonLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+  } | null
+} | null
+// Variable: contactPageQuery
+// Query: *[_type == "contactPage"][0]{    hero {      label, heading, body,      backgroundImage    },    formHeading,    formRecipientEmails,    contactHeading,    address,    phone,    email,    contactImage  }
+export type ContactPageQueryResult = {
+  hero: {
+    label: string | null
+    heading: string
+    body: string | null
+    backgroundImage: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+  formHeading: string | null
+  formRecipientEmails: Array<string>
+  contactHeading: string | null
+  address: string | null
+  phone: string | null
+  email: string | null
+  contactImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+} | null
+// Variable: teamPageQuery
+// Query: *[_type == "teamPage"][0]{    hero {      label, heading, body,      backgroundImage    },    bottomCta {      heading, body, buttonLabel,      buttonLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } }    }  }
+export type TeamPageQueryResult = {
+  hero: {
+    label: string | null
+    heading: string
+    body: string | null
+    backgroundImage: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+  bottomCta: {
+    heading: string
+    body: string | null
+    buttonLabel: string | null
+    buttonLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+  } | null
+} | null
+// Variable: whatMakesUsDifferentPageQuery
+// Query: *[_type == "whatMakesUsDifferentPage"][0]{    hero {      label, heading, body, ctaLabel,      ctaLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } },      backgroundImage    },    featuresSectionHeading,    features[]{ title, kicker, body, icon, showAccentBars },    bottomCta {      heading, body, buttonLabel,      buttonLink { ...,   _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  } }    }  }
+export type WhatMakesUsDifferentPageQueryResult = {
+  hero: {
+    label: string | null
+    heading: string
+    body: string | null
+    ctaLabel: string | null
+    ctaLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+    backgroundImage: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+  featuresSectionHeading: string | null
+  features: Array<{
+    title: string
+    kicker: string | null
+    body: string | null
+    icon: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    } | null
+    showAccentBars: boolean | null
+  }> | null
+  bottomCta: {
+    heading: string
+    body: string | null
+    buttonLabel: string | null
+    buttonLink: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+  } | null
+} | null
+// Variable: navigationQuery
+// Query: *[_type == "navigation"][0]{    navLinks[]{ label, href },    ctaLabel,    ctaHref  }
+export type NavigationQueryResult = {
+  navLinks: Array<{
+    label: string
+    href: string
+  }> | null
+  ctaLabel: string | null
+  ctaHref: string | null
+} | null
+// Variable: footerContentQuery
+// Query: *[_type == "footerContent"][0]{    address,    phone,    badgeImage,    copyrightText,    legalLinks[]{ label, href }  }
+export type FooterContentQueryResult = {
+  address: string | null
+  phone: string | null
+  badgeImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  copyrightText: string | null
+  legalLinks: Array<{
+    label: string
+    href: string
+  }> | null
+} | null
+// Variable: schedulePageQuery
+// Query: *[_type == "schedulePage"][0]{    heading,    description,    confirmationHeading,    confirmationBody,    notificationEmail,    businessAddress,    businessPhone  }
+export type SchedulePageQueryResult = {
+  heading: string | null
+  description: string | null
+  confirmationHeading: string | null
+  confirmationBody: string | null
+  notificationEmail: string
+  businessAddress: string | null
+  businessPhone: string | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -791,5 +1571,14 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
     '\n  *[_type == "person" && isTeamMember == true] | order(displayOrder asc, firstName asc) {\n    _id,\n    firstName,\n    lastName,\n    role,\n    picture\n  }\n': TeamMembersQueryResult
+    '\n  *[_type == "homePage"][0]{\n    heroHeading,\n    heroBody,\n    heroPrimaryCtaLabel,\n    heroPrimaryCtaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n    heroSecondaryCtaLabel,\n    heroSecondaryCtaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n    heroBackgroundImage,\n    trustedByHeading,\n    trustedByLogos[]{ logo },\n    differentiatorHeadingRegular,\n    differentiatorHeadingBold,\n    differentiatorBody,\n    differentiatorCtaLabel,\n    differentiatorCtaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n    differentiatorImage,\n    blastToFinishHeading,\n    blastToFinishBody,\n    blastToFinishCtaLabel,\n    blastToFinishCtaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n    blastToFinishBackgroundImage,\n    quickLinks[]{ label, href, tone }\n  }\n': HomePageQueryResult
+    '\n  *[_type == "aboutPage"][0]{\n    hero {\n      label, heading, body, ctaLabel,\n      ctaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n      backgroundImage\n    },\n    hybridCoatingHeading,\n    hybridCoatingBody,\n    contentRows[]{ title, description, image, imageSide, learnMoreLabel, learnMoreLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n } },\n    bottomCta {\n      heading, body, buttonLabel,\n      buttonLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n }\n    }\n  }\n': AboutPageQueryResult
+    '\n  *[_type == "servicesPage"][0]{\n    hero {\n      label, heading, body, ctaLabel,\n      ctaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n      backgroundImage\n    },\n    sectionTitle,\n    services[]{ title, description, image, imageSide, learnMoreLabel, learnMoreLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n } },\n    bottomCta {\n      heading, body, buttonLabel,\n      buttonLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n }\n    }\n  }\n': ServicesPageQueryResult
+    '\n  *[_type == "contactPage"][0]{\n    hero {\n      label, heading, body,\n      backgroundImage\n    },\n    formHeading,\n    formRecipientEmails,\n    contactHeading,\n    address,\n    phone,\n    email,\n    contactImage\n  }\n': ContactPageQueryResult
+    '\n  *[_type == "teamPage"][0]{\n    hero {\n      label, heading, body,\n      backgroundImage\n    },\n    bottomCta {\n      heading, body, buttonLabel,\n      buttonLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n }\n    }\n  }\n': TeamPageQueryResult
+    '\n  *[_type == "whatMakesUsDifferentPage"][0]{\n    hero {\n      label, heading, body, ctaLabel,\n      ctaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n      backgroundImage\n    },\n    featuresSectionHeading,\n    features[]{ title, kicker, body, icon, showAccentBars },\n    bottomCta {\n      heading, body, buttonLabel,\n      buttonLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n }\n    }\n  }\n': WhatMakesUsDifferentPageQueryResult
+    '\n  *[_type == "navigation"][0]{\n    navLinks[]{ label, href },\n    ctaLabel,\n    ctaHref\n  }\n': NavigationQueryResult
+    '\n  *[_type == "footerContent"][0]{\n    address,\n    phone,\n    badgeImage,\n    copyrightText,\n    legalLinks[]{ label, href }\n  }\n': FooterContentQueryResult
+    '\n  *[_type == "schedulePage"][0]{\n    heading,\n    description,\n    confirmationHeading,\n    confirmationBody,\n    notificationEmail,\n    businessAddress,\n    businessPhone\n  }\n': SchedulePageQueryResult
   }
 }

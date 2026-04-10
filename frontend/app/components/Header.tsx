@@ -1,22 +1,46 @@
 import Link from 'next/link'
-import {settingsQuery} from '@/sanity/lib/queries'
-import {sanityFetch} from '@/sanity/lib/live'
 
 import HeaderNav from '@/app/components/HeaderNav'
 import HeaderLink from '@/app/components/HeaderLink'
 
-export default async function Header() {
-  const {data: settings} = await sanityFetch({
-    query: settingsQuery,
-  })
+type NavLink = {label: string; href: string}
+
+type HeaderProps = {
+  title?: string
+  navLinks?: NavLink[]
+  ctaLabel?: string
+  ctaHref?: string
+}
+
+const fallbackNavLinks: NavLink[] = [
+  {href: '/team', label: 'The Team'},
+  {href: '/services', label: 'Services'},
+  {href: '/what-makes-us-different', label: 'What Makes Us Different'},
+  {href: '/about', label: 'About Hybrid Coatings'},
+  {href: '/schedule', label: 'Schedule Your Dropoff'},
+]
+
+export default function Header({
+  title = 'Oregon Sandblasting',
+  navLinks,
+  ctaLabel = 'Talk to the Team',
+  ctaHref = '/contact',
+}: HeaderProps) {
+  const links = navLinks && navLinks.length > 0 ? navLinks : fallbackNavLinks
+
+  const arrowIcon = (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 17L17 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M9 7H17V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-[115px] bg-design-charcoal">
       <div className="container h-full px-4 sm:px-6">
-        {/* Figma: inner nav row is 45px tall and starts 32px from the top */}
         <div className="flex h-full items-start justify-between gap-8 pt-8">
           <Link href="/" className="flex items-center gap-3">
-            <span className="sr-only">{settings?.title || 'Oregon Sandblasting'}</span>
+            <span className="sr-only">{title}</span>
             <div className="flex items-baseline gap-2">
               <span className="font-brand font-semibold uppercase text-design-brightBlue text-[42px] leading-[0.9] sm:text-[45px]">
                 Oregon
@@ -27,86 +51,31 @@ export default async function Header() {
             </div>
           </Link>
 
-          {/* Desktop nav */}
-          <HeaderNav />
+          <HeaderNav navLinks={links} ctaLabel={ctaLabel} ctaHref={ctaHref} />
 
-          {/* Mobile nav - CSS-only using details/summary */}
+          {/* Mobile nav */}
           <details className="group lg:hidden">
             <summary className="cursor-pointer list-none p-2 text-white/90 hover:text-white [&::-webkit-details-marker]:hidden">
-              {/* Hamburger icon - shown when closed */}
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 group-open:hidden"
-              >
-                <path
-                  d="M4 7H20M4 12H20M4 17H20"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-open:hidden">
+                <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
-              {/* Close icon - shown when open */}
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="hidden h-6 w-6 group-open:block"
-              >
-                <path
-                  d="M6 6L18 18M6 18L18 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="hidden h-6 w-6 group-open:block">
+                <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </summary>
 
             <div className="absolute left-0 right-0 top-[115px] bg-design-charcoal">
               <div className="container px-4 py-6 sm:px-6">
                 <div className="flex flex-col gap-4">
-                  <HeaderLink href="/team" label="The Team" className="w-fit" />
-                  <HeaderLink href="/services" label="Services" className="w-fit" />
+                  {links.map((link) => (
+                    <HeaderLink key={link.href} href={link.href} label={link.label} className="w-fit" />
+                  ))}
                   <HeaderLink
-                    href="/what-makes-us-different"
-                    label="What Makes Us Different"
-                    className="w-fit"
-                  />
-                  <HeaderLink href="/about" label="About Hybrid Coatings" className="w-fit" />
-                  <HeaderLink href="/schedule" label="Schedule Your Dropoff" className="w-fit" />
-                  <HeaderLink
-                    href="/contact"
-                    label="Talk to the Team"
+                    href={ctaHref}
+                    label={ctaLabel}
                     variant="cta"
                     className="w-fit"
-                    endIcon={
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M7 17L17 7"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        />
-                        <path
-                          d="M9 7H17V15"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    }
+                    endIcon={arrowIcon}
                   />
                 </div>
               </div>

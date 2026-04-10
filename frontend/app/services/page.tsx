@@ -1,8 +1,12 @@
+import {sanityFetch} from '@/sanity/lib/live'
+import {servicesPageQuery} from '@/sanity/lib/queries'
+import {urlForImage, linkResolver} from '@/sanity/lib/utils'
+
 import HelpScopingCta from '@/app/components/services/HelpScopingCta'
 import ServiceRow from '@/app/components/services/ServiceRow'
 import ServicesHero from '@/app/components/services/ServicesHero'
 
-const services = [
+const fallbackServices = [
   {
     title: 'Blasting',
     description:
@@ -55,30 +59,44 @@ const services = [
   },
 ]
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const {data} = await sanityFetch({query: servicesPageQuery})
+
+  const sectionTitle = data?.sectionTitle || 'Services'
+
+  const services =
+    data?.services && data.services.length > 0
+      ? data.services.map((s: any, i: number) => ({
+          title: s.title || '',
+          description: s.description || '',
+          imageSrc: urlForImage(s.image)?.width(1400).url() || '',
+          imageAlt: s.image?.alt || '',
+          imageSide: (s.imageSide as 'left' | 'right') || (i % 2 === 0 ? 'left' : 'right'),
+          accentBarsSide: (i % 2 === 0 ? 'right' : 'left') as 'left' | 'right',
+          learnMoreHref: linkResolver(s.learnMoreLink) || undefined,
+          learnMoreLabel: s.learnMoreLabel || undefined,
+        }))
+      : fallbackServices
+
   return (
     <>
-      <ServicesHero />
+      <ServicesHero data={data} />
 
-      {/* "Services" section title - Figma: y=1282, 60px Satoshi Bold */}
       <section className="bg-white pt-[120px] pb-[70px]">
         <div className="container">
           <h2 className="font-sans text-[40px] font-bold leading-[1.2] text-design-oregonSandblastingBlue sm:text-[50px] lg:text-[60px]">
-            Services
+            {sectionTitle}
           </h2>
         </div>
       </section>
 
-      {/* Service rows - Figma: 100px gap between each row */}
       <div className="flex flex-col gap-[100px] pb-[100px]">
-        {services.map((s) => (
+        {services.map((s: any) => (
           <ServiceRow key={s.title} {...s} />
         ))}
       </div>
 
-      <HelpScopingCta />
+      <HelpScopingCta data={data?.bottomCta} />
     </>
   )
 }
-
-

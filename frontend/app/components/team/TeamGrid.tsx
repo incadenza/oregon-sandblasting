@@ -1,9 +1,11 @@
+import {urlForImage} from '@/sanity/lib/utils'
+
 type TeamMember = {
   _id: string
   firstName: string
   lastName: string
   role?: string | null
-  picture?: string | null // Simple image URL for hardcoded data
+  picture?: any
 }
 
 type TeamGridProps = {
@@ -12,35 +14,31 @@ type TeamGridProps = {
 
 function TeamMemberCard({member}: {member: TeamMember}) {
   const fullName = `${member.firstName} ${member.lastName}`
+  const imageUrl = urlForImage(member.picture)?.width(600).height(600).fit('crop').url()
 
   return (
     <div className="group flex flex-col">
-      {/* Image container - square aspect ratio matching Figma */}
       <div className="relative aspect-square overflow-hidden bg-[#e8eaec]">
-        {member.picture ? (
+        {imageUrl ? (
           <img
-            src={member.picture}
-            alt={fullName}
+            src={imageUrl}
+            alt={member.picture?.alt || fullName}
             className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          /* Placeholder silhouette - matching Figma gray style */
           <div className="flex h-full w-full items-end justify-center bg-[#e8eaec]">
             <svg
               className="h-[70%] w-[60%] text-[#d0d3d6]"
               viewBox="0 0 100 100"
               fill="currentColor"
             >
-              {/* Head */}
               <circle cx="50" cy="30" r="18" />
-              {/* Shoulders/body */}
               <ellipse cx="50" cy="85" rx="35" ry="25" />
             </svg>
           </div>
         )}
       </div>
 
-      {/* Name and role */}
       <div className="mt-5">
         <h3 className="font-sans text-[18px] font-bold leading-[1.2] text-black sm:text-[20px]">
           {fullName}
@@ -71,7 +69,6 @@ export default function TeamGrid({members}: TeamGridProps) {
   return (
     <section className="bg-white py-16 lg:py-24">
       <div className="container">
-        {/* Grid of team members - 3 columns on desktop matching Figma */}
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12">
           {members.map((member) => (
             <TeamMemberCard key={member._id} member={member} />
@@ -81,4 +78,3 @@ export default function TeamGrid({members}: TeamGridProps) {
     </section>
   )
 }
-

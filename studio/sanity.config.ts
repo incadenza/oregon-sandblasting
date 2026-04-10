@@ -38,6 +38,18 @@ function resolveHref(documentType?: string, slug?: string): string | undefined {
       return slug ? `/posts/${slug}` : undefined
     case 'page':
       return slug ? `/${slug}` : undefined
+    case 'homePage':
+      return '/'
+    case 'aboutPage':
+      return '/about'
+    case 'servicesPage':
+      return '/services'
+    case 'contactPage':
+      return '/contact'
+    case 'teamPage':
+      return '/team'
+    case 'whatMakesUsDifferentPage':
+      return '/what-makes-us-different'
     default:
       console.warn('Invalid document type:', documentType)
       return undefined
@@ -47,7 +59,7 @@ function resolveHref(documentType?: string, slug?: string): string | undefined {
 // Main Sanity configuration
 export default defineConfig({
   name: 'default',
-  title: 'Sanity + Next.js Starter Template',
+  title: 'Oregon Sandblasting & Coating',
 
   projectId,
   dataset,
@@ -66,7 +78,27 @@ export default defineConfig({
         mainDocuments: defineDocuments([
           {
             route: '/',
-            filter: `_type == "settings" && _id == "siteSettings"`,
+            filter: `_type == "homePage"`,
+          },
+          {
+            route: '/about',
+            filter: `_type == "aboutPage"`,
+          },
+          {
+            route: '/services',
+            filter: `_type == "servicesPage"`,
+          },
+          {
+            route: '/contact',
+            filter: `_type == "contactPage"`,
+          },
+          {
+            route: '/team',
+            filter: `_type == "teamPage"`,
+          },
+          {
+            route: '/what-makes-us-different',
+            filter: `_type == "whatMakesUsDifferentPage"`,
           },
           {
             route: '/:slug',
@@ -77,12 +109,42 @@ export default defineConfig({
             filter: `_type == "post" && slug.current == $slug || _id == $slug`,
           },
         ]),
-        // Locations Resolver API allows you to define where data is being used in your application. https://www.sanity.io/docs/presentation-resolver-api#8d8bca7bfcd7
         locations: {
           settings: defineLocations({
             locations: [homeLocation],
             message: 'This document is used on all pages',
             tone: 'positive',
+          }),
+          navigation: defineLocations({
+            locations: [homeLocation],
+            message: 'Navigation is used on all pages',
+            tone: 'positive',
+          }),
+          footerContent: defineLocations({
+            locations: [homeLocation],
+            message: 'Footer is used on all pages',
+            tone: 'positive',
+          }),
+          homePage: defineLocations({
+            locations: [{title: 'Home', href: '/'}],
+          }),
+          aboutPage: defineLocations({
+            locations: [{title: 'About', href: '/about'}],
+          }),
+          servicesPage: defineLocations({
+            locations: [{title: 'Services', href: '/services'}],
+          }),
+          contactPage: defineLocations({
+            locations: [{title: 'Contact', href: '/contact'}],
+          }),
+          teamPage: defineLocations({
+            locations: [{title: 'Team', href: '/team'}],
+          }),
+          whatMakesUsDifferentPage: defineLocations({
+            locations: [{title: 'What Makes Us Different', href: '/what-makes-us-different'}],
+          }),
+          schedulePage: defineLocations({
+            locations: [{title: 'Schedule', href: '/schedule'}],
           }),
           page: defineLocations({
             select: {
