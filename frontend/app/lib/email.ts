@@ -3,7 +3,7 @@ import {Resend} from 'resend'
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 const fromEmail = process.env.RESEND_FROM_EMAIL || 'Oregon Sandblasting <onboarding@resend.dev>'
 
-type BookingEmailData = {
+export type BookingEmailData = {
   customerName: string
   customerEmail: string
   customerPhone: string
@@ -15,6 +15,15 @@ type BookingEmailData = {
   cancelUrl: string
   businessAddress: string
   businessPhone: string
+}
+
+export type BookingEmailCopy = {
+  confirmationSubject?: string
+  confirmationHeading?: string
+  confirmationBody?: string
+  notificationSubject?: string
+  notificationHeading?: string
+  notificationBody?: string
 }
 
 function brandHeader() {
@@ -55,15 +64,19 @@ function detailRow(label: string, value: string) {
     </tr>`
 }
 
-export async function sendConfirmationEmail(data: BookingEmailData) {
+export async function sendConfirmationEmail(data: BookingEmailData, copy?: BookingEmailCopy) {
   if (!resend) {
     console.warn('Resend not configured — skipping confirmation email')
     return
   }
 
+  const heading = copy?.confirmationHeading || 'Dropoff Confirmed'
+  const body = copy?.confirmationBody || 'Your delivery has been scheduled. Here are your details:'
+  const subjectPrefix = copy?.confirmationSubject || 'Dropoff Confirmed'
+
   const html = emailWrapper(`
-    <h1 style="margin:0 0 8px;font-size:24px;color:#1f2937;">Dropoff Confirmed</h1>
-    <p style="margin:0 0 24px;font-size:16px;color:#6b7280;">Your delivery has been scheduled. Here are your details:</p>
+    <h1 style="margin:0 0 8px;font-size:24px;color:#1f2937;">${heading}</h1>
+    <p style="margin:0 0 24px;font-size:16px;color:#6b7280;">${body}</p>
 
     <div style="background-color:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:20px;margin-bottom:24px;">
       <table style="width:100%;border-collapse:collapse;">
@@ -94,7 +107,7 @@ export async function sendConfirmationEmail(data: BookingEmailData) {
     await resend.emails.send({
       from: fromEmail,
       to: data.customerEmail,
-      subject: `Dropoff Confirmed — ${data.date} at ${data.timeRange}`,
+      subject: `${subjectPrefix} — ${data.date} at ${data.timeRange}`,
       html,
     })
   } catch (err) {
@@ -102,15 +115,19 @@ export async function sendConfirmationEmail(data: BookingEmailData) {
   }
 }
 
-export async function sendNotificationEmail(notifyTo: string, data: BookingEmailData) {
+export async function sendNotificationEmail(notifyTo: string, data: BookingEmailData, copy?: BookingEmailCopy) {
   if (!resend) {
     console.warn('Resend not configured — skipping notification email')
     return
   }
 
+  const heading = copy?.notificationHeading || 'New Dropoff Scheduled'
+  const body = copy?.notificationBody || 'A new delivery dropoff has been booked:'
+  const subjectPrefix = copy?.notificationSubject || 'New Dropoff'
+
   const html = emailWrapper(`
-    <h1 style="margin:0 0 8px;font-size:24px;color:#1f2937;">New Dropoff Scheduled</h1>
-    <p style="margin:0 0 24px;font-size:16px;color:#6b7280;">A new delivery dropoff has been booked:</p>
+    <h1 style="margin:0 0 8px;font-size:24px;color:#1f2937;">${heading}</h1>
+    <p style="margin:0 0 24px;font-size:16px;color:#6b7280;">${body}</p>
 
     <div style="background-color:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:20px;margin-bottom:24px;">
       <table style="width:100%;border-collapse:collapse;">
@@ -134,10 +151,82 @@ export async function sendNotificationEmail(notifyTo: string, data: BookingEmail
     await resend.emails.send({
       from: fromEmail,
       to: notifyTo,
-      subject: `New Dropoff: ${data.date} at ${data.timeRange} — ${data.company || data.customerName}`,
+      subject: `${subjectPrefix}: ${data.date} at ${data.timeRange} — ${data.company || data.customerName}`,
       html,
     })
   } catch (err) {
     console.error('Failed to send notification email:', err)
+  }
+}
+
+export type ContactEmailCopy = {
+  subject?: string
+  heading?: string
+  body?: string
+}
+
+export async function sendContactFormEmail(
+  to: string[],
+  replyTo: string,
+  formFields: {name: string; company: string; email: string; phone: string; projectLocation: string; timeline: string; services: string[]; description: string; referralSource: string},
+  copy?: ContactEmailCopy,
+) {
+  if (!resend) {
+    console.warn('Resend not configured — logging contact form submission')
+    console.log('Contact form submission:', formFields)
+    return
+  }
+
+  const heading = copy?.heading || 'New Contact Form Submission'
+  const body = copy?.body || 'Someone reached out through the website contact form.'
+  const subjectPrefix = copy?.subject || 'Contact Form'
+
+  function row(label: string, value: string) {
+    if (!value) return ''
+    return `<tr><td style="padding:8px 12px;font-size:13px;color:#6b7280;font-weight:600;white-space:nowrap;vertical-align:top;">${label}</td><td style="padding:8px 12px;font-size:14px;color:#1f2937;">${value}</td></tr>`
+  }
+
+  const html = emailWrapper(`
+    <h1 style="margin:0 0 8px;font-size:24px;color:#1f2937;">${heading}</h1>
+    <p style="margin:0 0 24px;font-size:16px;color:#6b7280;">${body}</p>
+
+    <div style="background-color:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:20px;margin-bottom:24px;">
+      <table style="width:100%;border-collapse:collapse;">
+        ${row('Name', formFields.name)}
+        ${row('Company', formFields.company)}
+        ${row('Email', `<a href="mailto:${formFields.email}" style="color:#3b82f6;">${formFields.email}</a>`)}
+        ${row('Phone', formFields.phone)}
+      </table>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+      ${row('Project Location', formFields.projectLocation)}
+      ${row('Timeline', formFields.timeline)}
+      ${row('Services Needed', formFields.services.length > 0 ? formFields.services.join(', ') : '')}
+      ${row('Referral Source', formFields.referralSource)}
+    </table>
+
+    ${formFields.description ? `
+      <h2 style="margin:0 0 8px;font-size:16px;color:#1f2937;">Project Description</h2>
+      <div style="background-color:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin-bottom:24px;">
+        <p style="margin:0;font-size:14px;color:#1f2937;white-space:pre-wrap;">${formFields.description}</p>
+      </div>
+    ` : ''}
+
+    <div style="text-align:center;margin-top:16px;">
+      <a href="mailto:${formFields.email}" style="display:inline-block;background-color:#3b82f6;color:#ffffff;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:12px 24px;text-decoration:none;">Reply to ${formFields.name}</a>
+    </div>
+  `)
+
+  try {
+    await resend.emails.send({
+      from: fromEmail,
+      to,
+      replyTo,
+      subject: `${subjectPrefix}: ${formFields.name}${formFields.company ? ` — ${formFields.company}` : ''}`,
+      html,
+    })
+  } catch (err) {
+    console.error('Failed to send contact form email:', err)
   }
 }

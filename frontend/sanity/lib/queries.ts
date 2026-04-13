@@ -1,6 +1,6 @@
 import {defineQuery} from 'next-sanity'
 
-export const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
+export const settingsQuery = defineQuery(`*[_type == "settings"][0]{ title, description, ogImage }`)
 
 const postFields = /* groq */ `
   _id,
@@ -175,6 +175,9 @@ export const contactPageQuery = defineQuery(`
     },
     formHeading,
     formRecipientEmails,
+    contactEmailSubject,
+    contactEmailHeading,
+    contactEmailBody,
     contactHeading,
     address,
     phone,
@@ -236,7 +239,13 @@ export const schedulePageQuery = defineQuery(`
     description,
     confirmationHeading,
     confirmationBody,
-    notificationEmail,
+    notificationEmails,
+    confirmationEmailSubject,
+    confirmationEmailHeading,
+    confirmationEmailBody,
+    notificationEmailSubject,
+    notificationEmailHeading,
+    notificationEmailBody,
     businessAddress,
     businessPhone
   }

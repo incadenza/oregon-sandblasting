@@ -9,6 +9,7 @@ export const contactPage = defineType({
   groups: [
     {name: 'hero', title: 'Hero'},
     {name: 'form', title: 'Form'},
+    {name: 'formEmail', title: 'Form Email Template'},
     {name: 'contactInfo', title: 'Contact Info'},
   ],
   fields: [
@@ -32,6 +33,29 @@ export const contactPage = defineType({
       group: 'form',
       description: 'Contact form submissions will be emailed to all of these addresses.',
       validation: (Rule) => Rule.required().min(1),
+    }),
+    defineField({
+      name: 'contactEmailSubject',
+      title: 'Email Subject Prefix',
+      type: 'string',
+      group: 'formEmail',
+      description: 'Subject line prefix for the notification email. Customer name is appended automatically.',
+      initialValue: 'Contact Form',
+    }),
+    defineField({
+      name: 'contactEmailHeading',
+      title: 'Email Heading',
+      type: 'string',
+      group: 'formEmail',
+      initialValue: 'New Contact Form Submission',
+    }),
+    defineField({
+      name: 'contactEmailBody',
+      title: 'Email Body',
+      type: 'text',
+      rows: 2,
+      group: 'formEmail',
+      initialValue: 'Someone reached out through the website contact form.',
     }),
     defineField({
       name: 'contactHeading',

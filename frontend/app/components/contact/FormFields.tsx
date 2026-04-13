@@ -76,8 +76,9 @@ export function SelectField({
           id={name}
           name={name}
           className={`h-[70px] w-full appearance-none bg-design-lightGray px-6 pr-14 text-[18px] text-design-oregonSandblastingBlue outline-none ring-2 ring-transparent focus:ring-design-brightBlue ${inputClassName}`.trim()}
-          defaultValue={options[0]}
+          defaultValue=""
         >
+          <option value="" disabled>Select one…</option>
           {options.map((o) => (
             <option key={o} value={o}>
               {o}

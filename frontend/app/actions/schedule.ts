@@ -10,7 +10,7 @@ import {
   generateBookingRef,
   type SlotInfo,
 } from '@/app/lib/schedule'
-import {sendConfirmationEmail, sendNotificationEmail} from '@/app/lib/email'
+import {sendConfirmationEmail, sendNotificationEmail, type BookingEmailCopy} from '@/app/lib/email'
 import {sanityFetch} from '@/sanity/lib/live'
 import {schedulePageQuery} from '@/sanity/lib/queries'
 
@@ -65,7 +65,7 @@ export async function submitBooking(data: BookingFormData): Promise<BookingResul
 
   const businessAddress = scheduleConfig?.businessAddress || '10000 SW Herman Rd,\nTualatin, Oregon 97062'
   const businessPhone = scheduleConfig?.businessPhone || '(503) 692-3575'
-  const notificationEmail = scheduleConfig?.notificationEmail
+  const notificationEmails: string[] = scheduleConfig?.notificationEmails?.filter(Boolean) || []
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
@@ -86,12 +86,20 @@ export async function submitBooking(data: BookingFormData): Promise<BookingResul
     businessPhone,
   }
 
-  // Send emails in parallel — don't let email failures block the booking
+  const emailCopy: BookingEmailCopy = {
+    confirmationSubject: scheduleConfig?.confirmationEmailSubject || undefined,
+    confirmationHeading: scheduleConfig?.confirmationEmailHeading || undefined,
+    confirmationBody: scheduleConfig?.confirmationEmailBody || undefined,
+    notificationSubject: scheduleConfig?.notificationEmailSubject || undefined,
+    notificationHeading: scheduleConfig?.notificationEmailHeading || undefined,
+    notificationBody: scheduleConfig?.notificationEmailBody || undefined,
+  }
+
   const emailPromises: Promise<void>[] = [
-    sendConfirmationEmail(emailData),
+    sendConfirmationEmail(emailData, emailCopy),
   ]
-  if (notificationEmail) {
-    emailPromises.push(sendNotificationEmail(notificationEmail, emailData))
+  for (const addr of notificationEmails) {
+    emailPromises.push(sendNotificationEmail(addr, emailData, emailCopy))
   }
   await Promise.allSettled(emailPromises)
 

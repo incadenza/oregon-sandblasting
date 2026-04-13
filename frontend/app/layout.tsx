@@ -5,13 +5,12 @@ import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import localFont from 'next/font/local'
 import {draftMode} from 'next/headers'
-import {VisualEditing, toPlainText} from 'next-sanity'
+import {VisualEditing} from 'next-sanity'
 import {Toaster} from 'sonner'
 
 import DraftModeToast from '@/app/components/DraftModeToast'
 import Footer from '@/app/components/Footer'
 import Header from '@/app/components/Header'
-import * as demo from '@/sanity/lib/demo'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
 import {settingsQuery, navigationQuery, footerContentQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
@@ -22,25 +21,16 @@ export async function generateMetadata(): Promise<Metadata> {
     query: settingsQuery,
     stega: false,
   })
-  const title = settings?.title || demo.title
-  const description = settings?.description || demo.description
+  const title = settings?.title || 'Oregon Sandblasting'
+  const description = settings?.description || 'Industrial-scale blasting, powder coating, liquid coating, and hybrid finishing — all under one roof.'
 
   const ogImage = resolveOpenGraphImage(settings?.ogImage)
-  let metadataBase: URL | undefined = undefined
-  try {
-    metadataBase = settings?.ogImage?.metadataBase
-      ? new URL(settings.ogImage.metadataBase)
-      : undefined
-  } catch {
-    // ignore
-  }
   return {
-    metadataBase,
     title: {
       template: `%s | ${title}`,
       default: title,
     },
-    description: toPlainText(description),
+    description,
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },

@@ -11,12 +11,10 @@ import {
   WrenchIcon,
 } from '@sanity/icons'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
-import pluralize from 'pluralize-esm'
 
-const DISABLED_TYPES = [
+const SINGLETON_TYPES = [
   'settings',
   'assist.instruction.context',
-  'person',
   'homePage',
   'aboutPage',
   'servicesPage',
@@ -26,6 +24,13 @@ const DISABLED_TYPES = [
   'schedulePage',
   'navigation',
   'footerContent',
+]
+
+const HIDDEN_TYPES = [
+  ...SINGLETON_TYPES,
+  'person',
+  'page',
+  'post',
 ]
 
 function singletonItem(S: StructureBuilder, typeName: string, title: string, icon: any) {
@@ -39,7 +44,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
     .title('Website Content')
     .items([
-      // Pages group
+      // ── Pages ──
       S.listItem()
         .title('Pages')
         .icon(DocumentIcon)
@@ -54,21 +59,21 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
               singletonItem(S, 'teamPage', 'Team', UsersIcon),
               singletonItem(S, 'whatMakesUsDifferentPage', 'What Makes Us Different', SparklesIcon),
               singletonItem(S, 'schedulePage', 'Schedule', CalendarIcon),
-              S.divider(),
-              S.documentTypeListItem('page').title('Other Pages'),
             ]),
         ),
+
       S.divider(),
-      // Team Members
+
+      // ── People ──
       S.listItem()
         .title('Team Members')
         .icon(UsersIcon)
         .child(S.documentTypeList('person').title('Team Members')),
-      // Posts
-      S.documentTypeListItem('post').title(pluralize('Post')),
+
       S.divider(),
-      // Global elements
+
+      // ── Global ──
       singletonItem(S, 'navigation', 'Navigation', MenuIcon),
       singletonItem(S, 'footerContent', 'Footer', EarthGlobeIcon),
-      singletonItem(S, 'settings', 'Site Settings', CogIcon),
+      singletonItem(S, 'settings', 'SEO & Metadata', CogIcon),
     ])

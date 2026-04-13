@@ -169,6 +169,106 @@ export type BlockContent = Array<{
   _key: string
 }>
 
+export type Page = {
+  _id: string
+  _type: 'page'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+  heading: string
+  subheading?: string
+  pageBuilder?: Array<
+    | ({
+        _key: string
+      } & CallToAction)
+    | ({
+        _key: string
+      } & InfoSection)
+  >
+}
+
+export type Post = {
+  _id: string
+  _type: 'post'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  content?: BlockContent
+  excerpt?: string
+  coverImage?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  date?: string
+  author?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'person'
+  }
+}
+
+export type Person = {
+  _id: string
+  _type: 'person'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  firstName: string
+  lastName: string
+  role?: string
+  isTeamMember?: boolean
+  displayOrder?: number
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x: number
+  y: number
+  height: number
+  width: number
+}
+
+export type Slug = {
+  _type: 'slug'
+  current: string
+  source?: string
+}
+
 export type SchedulePage = {
   _id: string
   _type: 'schedulePage'
@@ -179,7 +279,13 @@ export type SchedulePage = {
   description?: string
   confirmationHeading?: string
   confirmationBody?: string
-  notificationEmail: string
+  notificationEmails: Array<string>
+  confirmationEmailSubject?: string
+  confirmationEmailHeading?: string
+  confirmationEmailBody?: string
+  notificationEmailSubject?: string
+  notificationEmailHeading?: string
+  notificationEmailBody?: string
   businessAddress?: string
   businessPhone?: string
 }
@@ -211,22 +317,6 @@ export type FooterContent = {
     href: string
     _key: string
   }>
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x: number
-  y: number
-  height: number
-  width: number
 }
 
 export type Navigation = {
@@ -279,6 +369,9 @@ export type ContactPage = {
   hero?: HeroSection
   formHeading?: string
   formRecipientEmails: Array<string>
+  contactEmailSubject?: string
+  contactEmailHeading?: string
+  contactEmailBody?: string
   contactHeading?: string
   address?: string
   phone?: string
@@ -412,38 +505,7 @@ export type Settings = {
   _updatedAt: string
   _rev: string
   title: string
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: Array<{
-      linkType?: 'href' | 'page' | 'post'
-      href?: string
-      page?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'page'
-      }
-      post?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'post'
-      }
-      openInNewTab?: boolean
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
+  description?: string
   ogImage?: {
     asset?: {
       _ref: string
@@ -455,93 +517,8 @@ export type Settings = {
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
     alt?: string
-    metadataBase?: string
     _type: 'image'
   }
-}
-
-export type Page = {
-  _id: string
-  _type: 'page'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name: string
-  slug: Slug
-  heading: string
-  subheading?: string
-  pageBuilder?: Array<
-    | ({
-        _key: string
-      } & CallToAction)
-    | ({
-        _key: string
-      } & InfoSection)
-  >
-}
-
-export type Post = {
-  _id: string
-  _type: 'post'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  title: string
-  slug: Slug
-  content?: BlockContent
-  excerpt?: string
-  coverImage?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  }
-  date?: string
-  author?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'person'
-  }
-}
-
-export type Person = {
-  _id: string
-  _type: 'person'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  firstName: string
-  lastName: string
-  role?: string
-  isTeamMember?: boolean
-  displayOrder?: number
-  picture: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  }
-}
-
-export type Slug = {
-  _type: 'slug'
-  current: string
-  source?: string
 }
 
 export type SanityAssistInstructionTask = {
@@ -785,10 +762,14 @@ export type AllSanitySchemaTypes =
   | CallToAction
   | InfoSection
   | BlockContent
-  | SchedulePage
-  | FooterContent
+  | Page
+  | Post
+  | Person
   | SanityImageCrop
   | SanityImageHotspot
+  | Slug
+  | SchedulePage
+  | FooterContent
   | Navigation
   | WhatMakesUsDifferentPage
   | TeamPage
@@ -797,10 +778,6 @@ export type AllSanitySchemaTypes =
   | AboutPage
   | HomePage
   | Settings
-  | Page
-  | Post
-  | Person
-  | Slug
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
   | SanityAssistSchemaTypeAnnotations
@@ -824,47 +801,11 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]
+// Query: *[_type == "settings"][0]{ title, description, ogImage }
 export type SettingsQueryResult = {
-  _id: string
-  _type: 'settings'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
   title: string
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal'
-    listItem?: never
-    markDefs?: Array<{
-      linkType?: 'href' | 'page' | 'post'
-      href?: string
-      page?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'page'
-      }
-      post?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'post'
-      }
-      openInNewTab?: boolean
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
-  ogImage?: {
+  description: string | null
+  ogImage: {
     asset?: {
       _ref: string
       _type: 'reference'
@@ -875,9 +816,8 @@ export type SettingsQueryResult = {
     hotspot?: SanityImageHotspot
     crop?: SanityImageCrop
     alt?: string
-    metadataBase?: string
     _type: 'image'
-  }
+  } | null
 } | null
 // Variable: getPageQuery
 // Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
@@ -1374,7 +1314,7 @@ export type ServicesPageQueryResult = {
   } | null
 } | null
 // Variable: contactPageQuery
-// Query: *[_type == "contactPage"][0]{    hero {      label, heading, body,      backgroundImage    },    formHeading,    formRecipientEmails,    contactHeading,    address,    phone,    email,    contactImage  }
+// Query: *[_type == "contactPage"][0]{    hero {      label, heading, body,      backgroundImage    },    formHeading,    formRecipientEmails,    contactEmailSubject,    contactEmailHeading,    contactEmailBody,    contactHeading,    address,    phone,    email,    contactImage  }
 export type ContactPageQueryResult = {
   hero: {
     label: string | null
@@ -1396,6 +1336,9 @@ export type ContactPageQueryResult = {
   } | null
   formHeading: string | null
   formRecipientEmails: Array<string>
+  contactEmailSubject: string | null
+  contactEmailHeading: string | null
+  contactEmailBody: string | null
   contactHeading: string | null
   address: string | null
   phone: string | null
@@ -1547,13 +1490,19 @@ export type FooterContentQueryResult = {
   }> | null
 } | null
 // Variable: schedulePageQuery
-// Query: *[_type == "schedulePage"][0]{    heading,    description,    confirmationHeading,    confirmationBody,    notificationEmail,    businessAddress,    businessPhone  }
+// Query: *[_type == "schedulePage"][0]{    heading,    description,    confirmationHeading,    confirmationBody,    notificationEmails,    confirmationEmailSubject,    confirmationEmailHeading,    confirmationEmailBody,    notificationEmailSubject,    notificationEmailHeading,    notificationEmailBody,    businessAddress,    businessPhone  }
 export type SchedulePageQueryResult = {
   heading: string | null
   description: string | null
   confirmationHeading: string | null
   confirmationBody: string | null
-  notificationEmail: string
+  notificationEmails: Array<string>
+  confirmationEmailSubject: string | null
+  confirmationEmailHeading: string | null
+  confirmationEmailBody: string | null
+  notificationEmailSubject: string | null
+  notificationEmailHeading: string | null
+  notificationEmailBody: string | null
   businessAddress: string | null
   businessPhone: string | null
 } | null
@@ -1562,7 +1511,7 @@ export type SchedulePageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "settings"][0]': SettingsQueryResult
+    '*[_type == "settings"][0]{ title, description, ogImage }': SettingsQueryResult
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
@@ -1574,11 +1523,11 @@ declare module '@sanity/client' {
     '\n  *[_type == "homePage"][0]{\n    heroHeading,\n    heroBody,\n    heroPrimaryCtaLabel,\n    heroPrimaryCtaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n    heroSecondaryCtaLabel,\n    heroSecondaryCtaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n    heroBackgroundImage,\n    trustedByHeading,\n    trustedByLogos[]{ logo },\n    differentiatorHeadingRegular,\n    differentiatorHeadingBold,\n    differentiatorBody,\n    differentiatorCtaLabel,\n    differentiatorCtaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n    differentiatorImage,\n    blastToFinishHeading,\n    blastToFinishBody,\n    blastToFinishCtaLabel,\n    blastToFinishCtaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n    blastToFinishBackgroundImage,\n    quickLinks[]{ label, href, tone }\n  }\n': HomePageQueryResult
     '\n  *[_type == "aboutPage"][0]{\n    hero {\n      label, heading, body, ctaLabel,\n      ctaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n      backgroundImage\n    },\n    hybridCoatingHeading,\n    hybridCoatingBody,\n    contentRows[]{ title, description, image, imageSide, learnMoreLabel, learnMoreLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n } },\n    bottomCta {\n      heading, body, buttonLabel,\n      buttonLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n }\n    }\n  }\n': AboutPageQueryResult
     '\n  *[_type == "servicesPage"][0]{\n    hero {\n      label, heading, body, ctaLabel,\n      ctaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n      backgroundImage\n    },\n    sectionTitle,\n    services[]{ title, description, image, imageSide, learnMoreLabel, learnMoreLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n } },\n    bottomCta {\n      heading, body, buttonLabel,\n      buttonLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n }\n    }\n  }\n': ServicesPageQueryResult
-    '\n  *[_type == "contactPage"][0]{\n    hero {\n      label, heading, body,\n      backgroundImage\n    },\n    formHeading,\n    formRecipientEmails,\n    contactHeading,\n    address,\n    phone,\n    email,\n    contactImage\n  }\n': ContactPageQueryResult
+    '\n  *[_type == "contactPage"][0]{\n    hero {\n      label, heading, body,\n      backgroundImage\n    },\n    formHeading,\n    formRecipientEmails,\n    contactEmailSubject,\n    contactEmailHeading,\n    contactEmailBody,\n    contactHeading,\n    address,\n    phone,\n    email,\n    contactImage\n  }\n': ContactPageQueryResult
     '\n  *[_type == "teamPage"][0]{\n    hero {\n      label, heading, body,\n      backgroundImage\n    },\n    bottomCta {\n      heading, body, buttonLabel,\n      buttonLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n }\n    }\n  }\n': TeamPageQueryResult
     '\n  *[_type == "whatMakesUsDifferentPage"][0]{\n    hero {\n      label, heading, body, ctaLabel,\n      ctaLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n },\n      backgroundImage\n    },\n    featuresSectionHeading,\n    features[]{ title, kicker, body, icon, showAccentBars },\n    bottomCta {\n      heading, body, buttonLabel,\n      buttonLink { ..., \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n }\n    }\n  }\n': WhatMakesUsDifferentPageQueryResult
     '\n  *[_type == "navigation"][0]{\n    navLinks[]{ label, href },\n    ctaLabel,\n    ctaHref\n  }\n': NavigationQueryResult
     '\n  *[_type == "footerContent"][0]{\n    address,\n    phone,\n    badgeImage,\n    copyrightText,\n    legalLinks[]{ label, href }\n  }\n': FooterContentQueryResult
-    '\n  *[_type == "schedulePage"][0]{\n    heading,\n    description,\n    confirmationHeading,\n    confirmationBody,\n    notificationEmail,\n    businessAddress,\n    businessPhone\n  }\n': SchedulePageQueryResult
+    '\n  *[_type == "schedulePage"][0]{\n    heading,\n    description,\n    confirmationHeading,\n    confirmationBody,\n    notificationEmails,\n    confirmationEmailSubject,\n    confirmationEmailHeading,\n    confirmationEmailBody,\n    notificationEmailSubject,\n    notificationEmailHeading,\n    notificationEmailBody,\n    businessAddress,\n    businessPhone\n  }\n': SchedulePageQueryResult
   }
 }
