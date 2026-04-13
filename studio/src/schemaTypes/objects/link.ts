@@ -33,13 +33,13 @@ export const link = defineType({
       type: 'url',
       hidden: ({parent}) => parent?.linkType !== 'href',
       validation: (Rule) =>
-        // Custom validation to ensure URL is provided if the link type is 'href'
-        Rule.custom((value, context: any) => {
-          if (context.parent?.linkType === 'href' && !value) {
-            return 'URL is required when Link Type is URL'
-          }
-          return true
-        }),
+        Rule.uri({allowRelative: true, scheme: ['http', 'https', 'mailto', 'tel']})
+          .custom((value, context: any) => {
+            if (context.parent?.linkType === 'href' && !value) {
+              return 'URL is required when Link Type is URL'
+            }
+            return true
+          }),
     }),
     defineField({
       name: 'page',
